@@ -63,20 +63,53 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
     ![img.png](doc/figures/YARN_UI_2.png)
 
 9. Draw an architecture diagram (e.g. in draw.io) that includes:
-    1. VPC topology with service assignment to subnets
-    2. Description of the components of service accounts
-    3. List of buckets for disposal
-    4. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
-  
-    ***place your diagram here***
+
+i. VPC topology with service assignment to subnets
+
+![img.png](doc/figures/9.png)
+
+ii. Description of the components of service accounts
+
+![img.png](doc/figures/Description_of_the_components_of_service_accounts.png)
+
+tbd-2023-314241-data@tbd-2023-314241.iam.gserviceaccount.com: przeznaczone do zarządzania danymi projektu, np. dostęp do Cloud Storage lub BigQuery.
+tbd-2023-314241-lab@tbd-2023-314241.iam.gserviceaccount.com: przeznaczone do zarządzania infrastrukturą projektu w Google Cloud za pośrednictwem Terraform.
+211089532382-compute@developer.gserviceaccount.com (Domyślne konto Compute Engine): Automatycznie tworzone przez Compute Engine i używane do obsługi instancji oraz powiązanych zasobów.
+
+iii. List of buckets for disposal
+
+![img.png](doc/figures/List_of_Buckets_for_Disposal.png) 
+
+tbd-2023l-314241-code -> przechowuje kody źródłowe
+tbd-2023l-314241-conf -> przechowuje pliki konfiguracyjne
+tbd-2023l-314241-data -> przechowuje dane związane z projektem
+tbd-2023l-314241-state -> przechowuje informacje o stanie, tj. checkpointy czy logi.
+
+iv. Description of network communication (ports, why it is necessary to specify the host for the driver) of Apache Spark running from Vertex AI Workbech
+
+![img.png](doc/figures/network_communication.png)
+
+Wszystkie maszyny wirtualne pracują w podsieci subnet-01. 
+
+Określenie hosta dla Apache Spark działającego z Vertex AI Workbench jest kluczowe, ponieważ pozwala na poprawną konfigurację komunikacji między komponentami Spark a środowiskiem Vertex AI. Dzięki temu możliwa jest efektywna 	wymiana danych i współdziałanie w chmurze, co umożliwia skuteczne zarządzanie zasobami oraz minimalizuje ryzyko problemów związanych z niezgodnością sieciową lub błędami w lokalizacji usług.
 
 10. Create a new PR and add costs by entering the expected consumption into Infracost
 For all the resources of type: `google_artifact_registry`, `google_storage_bucket`, `google_service_networking_connection`
-create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml) 
+create a sample usage profiles and add it to the Infracost task in CI/CD pipeline. Usage file [example](https://github.com/infracost/infracost/blob/master/infracost-usage-example.yml)
 
-   ***place the expected consumption you entered here***
+Spodziewane wartosci konsumpcji (wykorzystano plik dostarczony przez prowadzcego):
 
-   ***place the screenshot from infracost output here***
+![img.png](doc/figures/10.png)
+
+Wywołaniu komendy infracost breakdown --path . --usage-file infracost-usage.yml otrzymaliśmy następujący rezultat: 
+
+![img.png](doc/figures/10_1.png)
+
+![img.png](doc/figures/10_2.png)
+    
+![img.png](doc/figures/10_3.png)
+
+![img.png](doc/figures/10_4.png)
 
 11. Create a BigQuery dataset and an external table using SQL
     
