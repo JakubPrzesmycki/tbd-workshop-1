@@ -39,7 +39,7 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 7. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
-    ***describe one selected module and put the output of terraform graph for this module here***
+![img.png](doc/figures/graph.png)
    
 8. Reach YARN UI
    
