@@ -40,6 +40,26 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 7. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
 ![img.png](doc/figures/graph.png)
+
+Moduł vertex-ai-workbench to środowisko oparte na Jupyter Notebook, które integruje się z usługami Google Cloud, 
+umożliwiając kompleksowe zarządzanie cyklem życia projektów uczenia maszynowego. Dzięki niemu w jednym miejscu można 
+eksplorować i analizować dane, tworzyć i trenować modele, wdrażać modele.
+ 
+Główną funkcją modułu jest uruchamianie maszyny wirtualnej, co odbywa się za pomocą zasobu google_notebooks_instance. 
+Odpowiada on  za konfigurację oraz przygotowanie środowiska pracy. google_project_service realizuje zarządzanie dostępem
+do usług Google, takich jak API notebooków, Natomiast google_project_iam_binding jest wykorzystywany do umożliwienia 
+korzystania z tych usług przez konto serwisowe, które służy do generowania tymczasowych poświadczeń.
+ 
+Zasób google_storage_bucket  zapewnia przestrzeń do przechowywania plików w Google Cloud Storage (GCS), jest tworzony 
+przez moduł vertex-ai-workbench. Dane ograniczone są jedynie do odczytu, a dostęp do nich przyznawany jest kontu 
+serwisowemu za pomocą zasobu google_storage_bucket_iam_binding. Zasób google_storage_bucket_object służy do przesyłania 
+skryptu inicjalizacyjnego, który uruchamia się po starcie maszyny, do przestrzeni GCS podczas wykonywania polecenia 
+terraform apply.
+ 
+ 
+Po wywołaniu komendy terraform graph -type=plan | dot -Tpng >graph.png w modules/vertex-ai-workbench wygenerowany został 
+graf zależności w konfiguracji Terraform dla infrastruktury w Google Cloud Platform (GCP). Pokazuje, jak poszczególne 
+zasoby, zmienne i moduły są ze sobą powiązane.
    
 8. Reach YARN UI
    
