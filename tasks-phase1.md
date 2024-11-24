@@ -132,12 +132,22 @@ Wywołaniu komendy infracost breakdown --path . --usage-file infracost-usage.yml
 ![img.png](doc/figures/10_4.png)
 
 11. Create a BigQuery dataset and an external table using SQL
-    
-    ***place the code and output here***
-   
-    ***why does ORC not require a table schema?***
 
-  
+CREATE SCHEMA IF NOT EXISTS demo OPTIONS(location = 'europe-west1');
+
+CREATE OR REPLACE EXTERNAL TABLE demo.shakespeare OPTIONS (
+
+format = 'ORC', uris = ['gs://tbd-2023l-314241-data/data/shakespeare/.orc'])
+
+![img.png](doc/figures/big_query.png)
+
+Błąd wskazujący na brak pliku shakespeare.
+
+***Dlaczego ORC nie wymaga schematu tabeli?***
+
+Format ORC nie wymaga osobnego schematu, ponieważ wbudowane metadane, takie jak nazwy pól i typy danych, opisują strukturę danych bezpośrednio w pliku. Dzięki temu narzędzia takie jak BigQuery mogą automatycznie odczytać schemat podczas importu, upraszczając pracę z danymi.
+
+Dalsze kroki zostaną zrealizowane po naprawie usunięcia job'ow.   
 12. Start an interactive session from Vertex AI workbench:
 
     ***place the screenshot of notebook here***
@@ -150,15 +160,15 @@ Wywołaniu komendy infracost breakdown --path . --usage-file infracost-usage.yml
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
-    ***place the link to the modified file and inserted terraform code***
+    https://github.com/JakubPrzesmycki/tbd-workshop-1/commit/d75251325d074d6e7e9c4165485bdcf5170a4a7d
     
-    3. Add support for preemptible/spot instances in a Dataproc cluster
+    2. Add support for preemptible/spot instances in a Dataproc cluster
 
-    ***place the link to the modified file and inserted terraform code***
+    https://github.com/JakubPrzesmycki/tbd-workshop-1/commit/2bd6fbd2a37b7f4a212ddd2c49402f466fb806de
     
     3. Perform additional hardening of Jupyterlab environment, i.e. disable sudo access and enable secure boot
     
-    ***place the link to the modified file and inserted terraform code***
+    https://github.com/JakubPrzesmycki/tbd-workshop-1/commit/30eaf29b1b02d0a8da7a55a5ea40feda7956f687
 
     4. (Optional) Get access to Apache Spark WebUI
 
