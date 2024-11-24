@@ -39,7 +39,27 @@ IMPORTANT ❗ ❗ ❗ Please remember to destroy all the resources after each wo
 
 7. Analyze terraform code. Play with terraform plan, terraform graph to investigate different modules.
 
-    ***describe one selected module and put the output of terraform graph for this module here***
+![img.png](doc/figures/graph.png)
+
+Moduł vertex-ai-workbench to środowisko oparte na Jupyter Notebook, które integruje się z usługami Google Cloud, 
+umożliwiając kompleksowe zarządzanie cyklem życia projektów uczenia maszynowego. Dzięki niemu w jednym miejscu można 
+eksplorować i analizować dane, tworzyć i trenować modele, wdrażać modele.
+ 
+Główną funkcją modułu jest uruchamianie maszyny wirtualnej, co odbywa się za pomocą zasobu google_notebooks_instance. 
+Odpowiada on  za konfigurację oraz przygotowanie środowiska pracy. google_project_service realizuje zarządzanie dostępem
+do usług Google, takich jak API notebooków, Natomiast google_project_iam_binding jest wykorzystywany do umożliwienia 
+korzystania z tych usług przez konto serwisowe, które służy do generowania tymczasowych poświadczeń.
+ 
+Zasób google_storage_bucket  zapewnia przestrzeń do przechowywania plików w Google Cloud Storage (GCS), jest tworzony 
+przez moduł vertex-ai-workbench. Dane ograniczone są jedynie do odczytu, a dostęp do nich przyznawany jest kontu 
+serwisowemu za pomocą zasobu google_storage_bucket_iam_binding. Zasób google_storage_bucket_object służy do przesyłania 
+skryptu inicjalizacyjnego, który uruchamia się po starcie maszyny, do przestrzeni GCS podczas wykonywania polecenia 
+terraform apply.
+ 
+ 
+Po wywołaniu komendy terraform graph -type=plan | dot -Tpng >graph.png w modules/vertex-ai-workbench wygenerowany został 
+graf zależności w konfiguracji Terraform dla infrastruktury w Google Cloud Platform (GCP). Pokazuje, jak poszczególne 
+zasoby, zmienne i moduły są ze sobą powiązane.
    
 8. Reach YARN UI
    
@@ -112,33 +132,54 @@ Wywołaniu komendy infracost breakdown --path . --usage-file infracost-usage.yml
 ![img.png](doc/figures/10_4.png)
 
 11. Create a BigQuery dataset and an external table using SQL
-    
-    ***place the code and output here***
-   
-    ***why does ORC not require a table schema?***
 
-  
+CREATE SCHEMA IF NOT EXISTS demo OPTIONS(location = 'europe-west1');
+
+CREATE OR REPLACE EXTERNAL TABLE demo.shakespeare OPTIONS (
+
+format = 'ORC', uris = ['gs://tbd-2023l-314241-data/data/shakespeare/.orc'])
+
+![img.png](doc/figures/big_query.png)
+
+Błąd wskazujący na brak pliku shakespeare.
+
+***Dlaczego ORC nie wymaga schematu tabeli?***
+
+Format ORC nie wymaga osobnego schematu, ponieważ wbudowane metadane, takie jak nazwy pól i typy danych, opisują strukturę danych bezpośrednio w pliku. Dzięki temu narzędzia takie jak BigQuery mogą automatycznie odczytać schemat podczas importu, upraszczając pracę z danymi.
+
+Dalsze kroki zostaną zrealizowane po naprawie usunięcia job'ow.   
 12. Start an interactive session from Vertex AI workbench:
 
-    ***place the screenshot of notebook here***
+PySparkRuntimeError(
+
+pyspark.errors.exceptions.base.PySparkRuntimeError: [PYTHON_VERSION_MISMATCH] Python in worker has different version (3, 8) than that in driver 3.10, PySpark cannot run with different minor versions.
+Please check environment variables PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON are correctly set.
+
+Komunikat o błędzie wskazuje na problem z różnicą w wersjach Pythona między driver'ami a worker'ami w aplikacji Spark.
+
+Driver: Python 3.10
+
+Worker: Python 3.8
+
+Pomimo próby przeinstalowania wersji Python'a do wersji 3.8, ale także ustawienia zmiennych w konfiguracji PySpark nie udało nam się rozwiązać powyższego problemu.
    
 13. Find and correct the error in spark-job.py
 
-    ***describe the cause and how to find the error***
+Z racji na omyłkowe usunięcie job'ów w projekcie, nie byliśmy w stanie 
 
 14. Additional tasks using Terraform:
 
     1. Add support for arbitrary machine types and worker nodes for a Dataproc cluster and JupyterLab instance
 
-    ***place the link to the modified file and inserted terraform code***
+    https://github.com/JakubPrzesmycki/tbd-workshop-1/commit/d75251325d074d6e7e9c4165485bdcf5170a4a7d
     
-    3. Add support for preemptible/spot instances in a Dataproc cluster
+    2. Add support for preemptible/spot instances in a Dataproc cluster
 
-    ***place the link to the modified file and inserted terraform code***
+    https://github.com/JakubPrzesmycki/tbd-workshop-1/commit/2bd6fbd2a37b7f4a212ddd2c49402f466fb806de
     
     3. Perform additional hardening of Jupyterlab environment, i.e. disable sudo access and enable secure boot
     
-    ***place the link to the modified file and inserted terraform code***
+    https://github.com/JakubPrzesmycki/tbd-workshop-1/commit/30eaf29b1b02d0a8da7a55a5ea40feda7956f687
 
     4. (Optional) Get access to Apache Spark WebUI
 
