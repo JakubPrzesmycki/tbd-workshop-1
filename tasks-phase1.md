@@ -150,11 +150,22 @@ Format ORC nie wymaga osobnego schematu, ponieważ wbudowane metadane, takie jak
 Dalsze kroki zostaną zrealizowane po naprawie usunięcia job'ow.   
 12. Start an interactive session from Vertex AI workbench:
 
-    ***place the screenshot of notebook here***
+PySparkRuntimeError(
+
+pyspark.errors.exceptions.base.PySparkRuntimeError: [PYTHON_VERSION_MISMATCH] Python in worker has different version (3, 8) than that in driver 3.10, PySpark cannot run with different minor versions.
+Please check environment variables PYSPARK_PYTHON and PYSPARK_DRIVER_PYTHON are correctly set.
+
+Komunikat o błędzie wskazuje na problem z różnicą w wersjach Pythona między driver'ami a worker'ami w aplikacji Spark.
+
+Driver: Python 3.10
+
+Worker: Python 3.8
+
+Pomimo próby przeinstalowania wersji Python'a do wersji 3.8, ale także ustawienia zmiennych w konfiguracji PySpark nie udało nam się rozwiązać powyższego problemu.
    
 13. Find and correct the error in spark-job.py
 
-    ***describe the cause and how to find the error***
+Z racji na omyłkowe usunięcie job'ów w projekcie, nie byliśmy w stanie 
 
 14. Additional tasks using Terraform:
 
