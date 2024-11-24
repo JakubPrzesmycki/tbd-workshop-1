@@ -165,7 +165,9 @@ Pomimo próby przeinstalowania wersji Python'a do wersji 3.8, ale także ustawie
    
 13. Find and correct the error in spark-job.py
 
-Z racji na omyłkowe usunięcie job'ów w projekcie, nie byliśmy w stanie 
+Zmiana zmiennej DAT_BUCKET w pliku pyspark_job.py:
+
+![img.png](doc/figures/pyspark_job.png)
 
 14. Additional tasks using Terraform:
 
@@ -184,3 +186,7 @@ Z racji na omyłkowe usunięcie job'ów w projekcie, nie byliśmy w stanie
     4. (Optional) Get access to Apache Spark WebUI
 
     ***place the link to the modified file and inserted terraform code***
+
+***Ostateczny release przebiegł pomyślnie:***
+
+![img.png](doc/figures/release_finish.png)
