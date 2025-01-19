@@ -15,8 +15,18 @@ module "dataproc" {
 
 and subsititute "e2-standard-2" with "e2-standard-4".
 
+Zmienione wartości w pliku main.tf:
+
+![img.png](doc/figures/2b_0.png)
+
 2. If needed request to increase cpu quotas (e.g. to 30 CPUs): 
 https://console.cloud.google.com/apis/api/compute.googleapis.com/quotas?project=tbd-2023z-9918
+
+Zwiekszona wartość limitu procesrów:
+
+![img.png](doc/figures/2b_1.png)
+
+![img.png](doc/figures/2b_2.png)
 
 3. Using tbd-tpc-di notebook perform dbt run with different number of executors, i.e., 1, 2, and 5, by changing:
 ```
