@@ -52,3 +52,17 @@ Wykres  czasu wykonania dla wszystkich tabel dla róznych executor'ow.
 Wykres przedstawiający porównanie łącznych czasów wykonania programów dla róznych wartości executor'ów (od lewej: 1, 2 i 5).
 
 ![img.png](doc/figures/2b_5.png)
+
+
+WNIOSKI
+
+Przede wszystkim, zauważamy, iż wieksza ilośc executor'ow pozytywnie wpływa na czas wykonania programów. Taki wynik nie jest zaskoczeniem, ponieważ zwiększenie liczby executorów umożliwia bardziej efektywne rozproszenie obciążenia, co znacząco przyczynia się do skrócenia czasu obliczeń.
+Patrząc na wyniki wykonywania programu dla poszczególnych tabel, stwierdzamy iż nie ma reguły, że dla większej ilości executor'ów "ZAWSZE" zmniejszy się czas wykonywania programu. Niektórym tabelom wzrasta czas wykonania programu wraz ze wzrostem liczby executr'ow.
+Zrozumiałe jest, iż dla większości tabel czas ten się zmneisjza wraz ze zwiekszeniem się ilości executor'ow. Spowodowane to jest tym, że większa liczba executorów pozwala na efektywniejsze równoległe przetwarzanie danych.
+Możemy zauważyć, iż róznica pomiędzy czasami wykonania dla executor'a = x i executor'a = x + 1 jest coraz mniejsza, co świadczy o tym, że im większa liczba executor'ów, tym coraz to mniejszy poprawy wydajności czasowej.
+
+
+
+
+
+
