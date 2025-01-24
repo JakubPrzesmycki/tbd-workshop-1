@@ -37,7 +37,18 @@ in profiles.yml.
 
 4. In the notebook, collect console output from dbt run, then parse it and retrieve total execution time and execution times of processing each model. Save the results from each number of executors. 
 
+Na pozniższej tabeli porównano wyniki czasowe wykonania dla każdego z modeli, porównując ze sobą ilości executor'ów (1, 2, 5).
+
+![img.png](doc/figures/2b_3.png)
+
 5. Analyze the performance and scalability of execution times of each model. Visualize and discucss the final results.
 
+Wykres  czasu wykonania dla wszystkich tabel dla róznych executor'ow.
 
-   
+
+![img.png](doc/figures/2b_4.png)
+
+
+Wykres przedstawiający porównanie łącznych czasów wykonania programów dla róznych wartości executor'ów (od lewej: 1, 2 i 5).
+
+![img.png](doc/figures/2b_5.png)
