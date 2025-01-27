@@ -15,8 +15,18 @@ module "dataproc" {
 
 and subsititute "e2-standard-2" with "e2-standard-4".
 
+Zmienione wartości w pliku main.tf:
+
+![img.png](doc/figures/2b_0.png)
+
 2. If needed request to increase cpu quotas (e.g. to 30 CPUs): 
 https://console.cloud.google.com/apis/api/compute.googleapis.com/quotas?project=tbd-2023z-9918
+
+Zwiekszona wartość limitu procesrów:
+
+![img.png](doc/figures/2b_1.png)
+
+![img.png](doc/figures/2b_2.png)
 
 3. Using tbd-tpc-di notebook perform dbt run with different number of executors, i.e., 1, 2, and 5, by changing:
 ```
@@ -27,7 +37,32 @@ in profiles.yml.
 
 4. In the notebook, collect console output from dbt run, then parse it and retrieve total execution time and execution times of processing each model. Save the results from each number of executors. 
 
+Na pozniższej tabeli porównano wyniki czasowe wykonania dla każdego z modeli, porównując ze sobą ilości executor'ów (1, 2, 5).
+
+![img.png](doc/figures/2b_3.png)
+
 5. Analyze the performance and scalability of execution times of each model. Visualize and discucss the final results.
 
+Wykres  czasu wykonania dla wszystkich tabel dla róznych executor'ow.
 
-   
+
+![img.png](doc/figures/2b_4.png)
+
+
+Wykres przedstawiający porównanie łącznych czasów wykonania programów dla róznych wartości executor'ów (od lewej: 1, 2 i 5).
+
+![img.png](doc/figures/2b_5.png)
+
+
+WNIOSKI
+
+Przede wszystkim, zauważamy, iż wieksza ilośc executor'ow pozytywnie wpływa na czas wykonania programów. Taki wynik nie jest zaskoczeniem, ponieważ zwiększenie liczby executorów umożliwia bardziej efektywne rozproszenie obciążenia, co znacząco przyczynia się do skrócenia czasu obliczeń.
+Patrząc na wyniki wykonywania programu dla poszczególnych tabel, stwierdzamy iż nie ma reguły, że dla większej ilości executor'ów "ZAWSZE" zmniejszy się czas wykonywania programu. Niektórym tabelom wzrasta czas wykonania programu wraz ze wzrostem liczby executr'ow.
+Zrozumiałe jest, iż dla większości tabel czas ten się zmneisjza wraz ze zwiekszeniem się ilości executor'ow. Spowodowane to jest tym, że większa liczba executorów pozwala na efektywniejsze równoległe przetwarzanie danych.
+Możemy zauważyć, iż róznica pomiędzy czasami wykonania dla executor'a = x i executor'a = x + 1 jest coraz mniejsza, co świadczy o tym, że im większa liczba executor'ów, tym coraz to mniejszy poprawy wydajności czasowej.
+
+
+
+
+
+
